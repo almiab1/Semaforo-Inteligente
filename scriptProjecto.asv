@@ -6,13 +6,12 @@
 % Descripción: Detección de vehiculos y personas para cambiar el estado de un semáforo
 %
 %% -------------------------------------------------------------------------------------------------
-% Configuración inicial de 
-clc
+% Configuración inicial de prueba
 clear
 close all
 
 I = imread('imagPasoCebra2.jpg'); % Cargamos la imagen
-detectorVehicle = vehicleDetectorACF('front-rear-view'); % Cargamos el detector de vehiculos
+detectorVehicle = vehicleDetectorACF('full-view'); % Cargamos el detector de vehiculos
 detectorPeople = peopleDetectorACF('inria-100x41'); % Cargamos el detector de personas
 %% -------------------------------------------------------------------------------------------------
 % Deteccion vehiculos
@@ -21,10 +20,10 @@ detectorPeople = peopleDetectorACF('inria-100x41'); % Cargamos el detector de pe
 p0 = puntuacionVehiculos;
 c0 = cajasVehiculos;
 
-tamanyoPunt = abs(length(puntuacionVehiculos))-1;
+tamanyoPunt = abs(size(puntuacionVehiculos)-1;
 
 for i = 1:tamanyoPunt
-    if ( puntuacionVehiculos(i) > 6.00)
+    if ( puntuacionVehiculos(i) < 20)
         c0(i,:) = [];
         p0(i) = [];
     end
