@@ -13,33 +13,23 @@ close all
 I = imread('imagPasoCebra2.jpg'); % Cargamos la imagen
 detectorVehicle = vehicleDetectorACF('full-view'); % Cargamos el detector de vehiculos
 detectorPeople = peopleDetectorACF('inria-100x41'); % Cargamos el detector de personas
-
-for test = [1, 3, 4]
-    
-end
 %% -------------------------------------------------------------------------------------------------
 % Deteccion vehiculos
 [cajasVehiculos,puntuacionVehiculos] = detect(detectorVehicle,I); % Activamos el detector
 
-A = java.util.ArrayList();
-controlador = puntuacionVehiculos.listIterator();
- 
+p0 = puntuacionVehiculos;
+c0 = cajasVehiculos;
 
-for i = puntuacionVehiculos
-    if ( puntuacionVehiculos >= 20)
-        A.add(i);
+tamanyoPunt = abs(size(puntuacionVehiculos)-1;
+
+for i = 1:tamanyoPunt
+    if ( puntuacionVehiculos(i) < 20)
+        c0(i,:) = [];
+        p0(i) = [];
     end
 end
-while controlador.hasNext()
 
-    k = itr.next();
-    if ( puntuacionVehiculos >= 20)
-        A.add(i);
-    end
-
-end
-
-I = insertObjectAnnotation(I,'rectangle',cajasVehiculos,puntuacionVehiculos2); % Insertamos loos contenedores con los valores 
+I = insertObjectAnnotation(I,'rectangle',c0,p0); % Insertamos loos contenedores con los valores 
 
 figure
 imshow(I)
