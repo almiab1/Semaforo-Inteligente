@@ -12,25 +12,23 @@ clear
 close all
 
 I = imread('imagPasoCebra2.jpg'); % Cargamos la imagen
-detectorVehicle = vehicleDetectorACF('front-rear-view'); % Cargamos el detector de vehiculos
+detectorVehicle = vehicleDetectorACF('full-view'); % Cargamos el detector de vehiculos
 detectorPeople = peopleDetectorACF('inria-100x41'); % Cargamos el detector de personas
 %% -------------------------------------------------------------------------------------------------
 % Deteccion vehiculos
 [cajasVehiculos,puntuacionVehiculos] = detect(detectorVehicle,I); % Activamos el detector
 
-p0 = puntuacionVehiculos;
-c0 = cajasVehiculos;
+% pV = puntuacionVehiculos;
+% cV = cajasVehiculos;
 
-tamanyoPunt = abs(length(puntuacionVehiculos))-1;
+tamanyoPunt = abs(length(puntuacionVehiculos));
 
-for i = 1:tamanyoPunt
-    if ( puntuacionVehiculos(i) > 6.00)
-        c0(i,:) = [];
-        p0(i) = [];
-    end
-end
+indice = find(puntuacionVehiculos >= 26);
 
-I = insertObjectAnnotation(I,'rectangle',c0,p0); % Insertamos loos contenedores con los valores 
+pV = puntuacionVehiculos(indice);
+cV = cajasVehiculos(indice,:);
+
+I = insertObjectAnnotation(I,'rectangle',cV,pV); % Insertamos loos contenedores con los valores 
 
 figure
 imshow(I)
@@ -38,11 +36,13 @@ title('Detección de vehiculos y detección de puntuación')
 %% -------------------------------------------------------------------------------------------------
 % Deteccion personas
 [cajasPersonas,puntuacionPersonas] = detect(detectorPeople,I);
+
 if not (isempty(cajasPersonas))
-I = insertObjectAnnotation(I,'rectangle',cajasPersonas,puntuacionPersonas);
+    I = insertObjectAnnotation(I,'rectangle',cajasPersonas,puntuacionPersonas);
 end
-figure
-imshow(I)
-title('Detección de vehiculos y personas con su puntuación')
+
+% figure
+% imshow(I)
+% title('Detección de vehiculos y personas con su puntuación')
 
 
