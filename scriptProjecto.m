@@ -12,7 +12,7 @@ clear
 close all
 
 I = imread('imagPasoCebra2.jpg'); % Cargamos la imagen
-detectorVehicle = vehicleDetectorACF('full-view'); % Cargamos el detector de vehiculos
+detectorVehicle = vehicleDetectorACF('front-rear-view'); % Cargamos el detector de vehiculos
 detectorPeople = peopleDetectorACF('inria-100x41'); % Cargamos el detector de personas
 %% -------------------------------------------------------------------------------------------------
 % Deteccion vehiculos
@@ -23,7 +23,7 @@ detectorPeople = peopleDetectorACF('inria-100x41'); % Cargamos el detector de pe
 
 tamanyoPunt = abs(length(puntuacionVehiculos));
 
-indice = find(puntuacionVehiculos >= 26);
+indice = find(puntuacionVehiculos >= 5);
 
 pV = puntuacionVehiculos(indice);
 cV = cajasVehiculos(indice,:);
@@ -45,4 +45,6 @@ end
 % imshow(I)
 % title('Detección de vehiculos y personas con su puntuación')
 
+%% -------------------------------------------------------------------------------------------------
+% Funcion cargar imagen
 
