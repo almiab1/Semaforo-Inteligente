@@ -29,20 +29,29 @@ indice = find(puntuacionVehiculos >= 5);
 pV = puntuacionVehiculos(indice);
 cV = cajasVehiculos(indice,:);
 
-I = insertObjectAnnotation(I,'rectangle',cV,pV); % Insertamos loos contenedores con los valores 
+% I = insertObjectAnnotation(I,'rectangle',cV,pV); % Insertamos loos contenedores con los valores 
 
-figure
-imshow(I)
-title('Detección de vehiculos y detección de puntuación')
+% figure
+% imshow(I)
+% title('Detección de vehiculos y detección de puntuación')
 %% -------------------------------------------------------------------------------------------------
 % Deteccion personas
 [cajasPersonas,puntuacionPersonas] = detect(detectorPeople,I);
 
 if not (isempty(cajasPersonas))
-    I = insertObjectAnnotation(I,'rectangle',cajasPersonas,puntuacionPersonas);
+%     I = insertObjectAnnotation(I,'rectangle',cajasPersonas,puntuacionPersonas);
 end
 
+% figure
+% imshow(I)
+% title('Detección de vehiculos y personas con su puntuación')
+%% -------------------------------------------------------------------------------------------------
+% Poner en gray scale y operaciones binarias
+
+I = rgb2gray(I);
+I = imbinarize(I, 'adaptive','Sensitivity',0.4);
+I = imfill(I,'holes');
+SE = strel('rectangle',[5,4]);
+I = imdilate(I,SE);
 figure
 imshow(I)
-title('Detección de vehiculos y personas con su puntuación')
-
