@@ -9,7 +9,7 @@
 % Funcion cargar imagen
 function imgParametros = procesarImg(imgenBase)
     
-    I = imread(imgenBase); % leemos la imagen
+    I = imread(imgenBase); % Cargamos la imagen
     detectorVehicle = vehicleDetectorACF('front-rear-view'); % Cargamos el detector de vehiculos
     detectorPeople = peopleDetectorACF('inria-100x41'); % Cargamos el detector de personas
     
