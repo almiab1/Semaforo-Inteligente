@@ -6,10 +6,10 @@
 % Descripción: Detección de vehiculos y personas para cambiar el estado de un semáforo
 %
 %% -------------------------------------------------------------------------------------------------
-% Funcion cargar imagen
-function imgParametros = procesarImg(imgenBase)
+% Funcion procesar imagen
+function output = procesarImagen(imagenBase)
     
-    I = imread(imgenBase); % leemos la imagen
+    I = imagenBase; % Cargamos la imagen
     detectorVehicle = vehicleDetectorACF('front-rear-view'); % Cargamos el detector de vehiculos
     detectorPeople = peopleDetectorACF('inria-100x41'); % Cargamos el detector de personas
     
@@ -17,14 +17,25 @@ function imgParametros = procesarImg(imgenBase)
     [cajasVehiculos,puntuacionVehiculos] = detect(detectorVehicle,I); % Activamos el detector
 
     tamanyoPunt = abs(length(puntuacionVehiculos));
-
     indice = find(puntuacionVehiculos >= 5);
 
     pV = puntuacionVehiculos(indice);
-    numCoches = cajasVehiculos(indice,:);
+    cV = cajasVehiculos(indice,:);
     
+    I = insertObjectAnnotation(I,'rectangle',cV,pV); % Insertamos loos contenedores con los valores
+        
     % Deteccion personas
     [cajasPersonas,puntuacionPersonas] = detect(detectorPeople,I);
+    if not (isempty(cajasPersonas))
+        I = insertObjectAnnotation(I,'rectangle',cajasPersonas,puntuacionPersonas);
+    end
     
-    imgParametros = [size(numCoches),size(cajasPersonas),1];
+    figure,imshow(I);
+    
+    numCoches = size(cV);
+    numPersonas = size(cajasPersonas);
+    
+    % Outputs
+    output = [numCoches(1); numPersonas(1)];
 end
+
