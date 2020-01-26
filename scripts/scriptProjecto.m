@@ -53,5 +53,26 @@ I = imbinarize(I, 'adaptive','Sensitivity',0.4);
 I = imfill(I,'holes');
 SE = strel('rectangle',[5,4]);
 I = imdilate(I,SE);
+BW = edge(I);
+
+[H,T,R] = hough(BW,'RhoResolution',0.5,'Theta',-90:0.5:89);
+P = houghpeaks(H, 5, 'threshold', ceil(0.3*max(H(:))));
+x = T(P(:,2));
+y = R(P(:,1));
+lines = houghlines(BW, T, R, P, 'FillGap', 5, 'MinLength', 7);
+
 figure
-imshow(I)
+imshow(BW), hold on
+
+max_len = 0;
+for k = 1: length(lines)
+    xy = [lines(k).point1; lines(k).point2];
+    plot(xy(:,1), xy(:,2), 'LineWidth', 2, 'Color', 'green');
+    plot(xy(1,1), xy(1,2), 'x', 'LineWidth', 2, 'Color', 'yellow');
+    plot(xy(2,1), xy(2,2), 'x', 'LineWidth', 2, 'Color', 'red');
+    len = norm(lines(k).point1 - lines(k).point2);
+    if (len > max_len)
+        max_len = len;
+    end
+end
+    
