@@ -29,9 +29,7 @@ function output = procesarImagen(imagenBase)
     if not (isempty(cajasPersonas))
         I = insertObjectAnnotation(I,'rectangle',cajasPersonas,puntuacionPersonas);
     end
-    
-    figure,imshow(I);
-    
+        
     numCoches = size(cV);
     numPersonas = size(cajasPersonas);
     
