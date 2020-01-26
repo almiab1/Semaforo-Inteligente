@@ -10,13 +10,13 @@
 function output = procesarImagen(imagenBase)
     
     I = imagenBase; % Cargamos la imagen
+    I = rgb2gray(I); % Pasamos a escala de grises la imagen
     detectorVehicle = vehicleDetectorACF('front-rear-view'); % Cargamos el detector de vehiculos
     detectorPeople = peopleDetectorACF('inria-100x41'); % Cargamos el detector de personas
     
     % Deteccion vehiculos
     [cajasVehiculos,puntuacionVehiculos] = detect(detectorVehicle,I); % Activamos el detector
 
-    tamanyoPunt = abs(length(puntuacionVehiculos));
     indice = find(puntuacionVehiculos >= 5);
 
     pV = puntuacionVehiculos(indice);
