@@ -73,10 +73,10 @@ function output = calcularDistancia(imagenBase)
     end
     
     % Outputs
-    if (distanciaCoche > distanciaPersona)
+    if (distanciaCoche >= distanciaPersona)
         output = true;
     end
-    if (distanciaCoche <= distanciaPersona)
+    if (distanciaCoche < distanciaPersona)
         output = false;
     end
     
