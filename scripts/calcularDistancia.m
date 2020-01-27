@@ -58,14 +58,14 @@ function output = calcularDistancia(imagenBase)
         end
         
         for j = 1: length(cV)
-            d = sqrt( (cV(j).point2 - cV(j).point1).^2 + (lines(k).point2 - lines(k).point1).^2);
+            d = sqrt( (cV(2,j) - cV(1,j)).^2 + (lines(k).point2 - lines(k).point1).^2);
             if (d < distanciaCoche)
                 distanciaCoche = d;
             end
         end
         
         for l = 1: length(cajasPersonas)
-            di = sqrt( (cajasPersonas(l).point2 - cajasPersonas(l).point1).^2 + (lines(k).point2 - lines(k).point1).^2);
+            di = sqrt( (cajasPersonas(2,l) - cajasPersonas(1,l)).^2 + (lines(k).point2 - lines(k).point1).^2);
             if (di < distanciaPersona)
                 distanciaPersona = di;
             end
